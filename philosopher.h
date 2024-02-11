@@ -41,6 +41,10 @@ typedef struct s_info
 # define TRUE 1
 # define FALSE 0
 
+# define FULL 1
+# define EMPTY 0
+
+
 // philo do
 # define EATING 1
 # define SLEEPING 2

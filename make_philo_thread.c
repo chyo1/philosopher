@@ -22,7 +22,7 @@ void	make_philo_thread(t_const *const_info, pthread_t *philo_tid)
 	{
 		info = init_info(const_info);
 		info->p_num = idx;
-		// printf("\n~~idx : %d info->p_num = %d~~ \n", idx, info->p_num);
+		printf("\n~~idx : %d info->p_num = %d~~ \n", idx, info->p_num);
 		if (pthread_create(&(philo_tid[idx]), NULL, do_philo, (void *)info) == -1)
 			print_error_n_exit(THREAD_CREATE_ERROR);
 		idx++;
