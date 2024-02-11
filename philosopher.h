@@ -21,7 +21,7 @@
 typedef struct s_const
 {
 	pthread_mutex_t	*ready;
-	int				p_num;
+	int				p_cnt;
 	int				t_die;
 	int				t_eat;
 	int				t_sleep;
@@ -56,14 +56,18 @@ typedef struct s_info
 int			main(int argc, char **argv);
 
 // init_info.c
+void		*ft_calloc(size_t count, size_t size);
 t_const		*init_const_info(int argc, char **argv);
 pthread_t	*init_tid(int philo_num);
-t_info		*init_info(t_const *const_info);
+
+// make_philo_thread.c
 void		make_philo_thread(t_const *const_info, pthread_t *philo_tid);
+t_info		*init_info(t_const *const_info);
 
 // do_philo.c
 void		*do_philo(void *cont);
 
 // printf_error_n_exit.c
 void		print_error_n_exit(int which);
+
 #endif

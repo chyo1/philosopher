@@ -25,8 +25,9 @@ void	*do_philo(void *cont)
 	t_info	*info;
 
 	info = (t_info *)cont;
-	printf("\n---------%d--------\n", info->p_num);
+	// printf("\n---thread info->p_num :%d--\n", info->p_num);
 	pthread_mutex_lock(info->wait);
+	// check_forks();
 	pthread_mutex_unlock(info->wait);
 	do_eating(info);
 	return (NULL);

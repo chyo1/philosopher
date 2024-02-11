@@ -19,7 +19,7 @@ int	main(int argc, char **argv)
 	t_const			*const_info;
 
 	const_info = init_const_info(argc, argv);
-	philo_tid = init_tid(const_info->p_num);
+	philo_tid = init_tid(const_info->p_cnt);
 	
 	pthread_mutex_init(const_info->ready, NULL);
 	pthread_mutex_lock(const_info->ready);

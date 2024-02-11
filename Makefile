@@ -3,7 +3,8 @@ NAME=		philo
 CC=			cc
 CFLAGS=		-Wall -Wextra -Werror -g
 SRCS_MAN=	main.c\
-			init_info.c do_philo.c\
+			init_info.c make_philo_thread.c\
+			do_philo.c\
 			print_error_n_exit.c
 			
 SRCS_BONUS= 
