@@ -5,6 +5,7 @@ CFLAGS=		-Wall -Wextra -Werror -g
 SRCS_MAN=	main.c\
 			init_info.c make_philo_thread.c\
 			do_philo.c\
+			do_eating.c do_sleeping.c do_thinking.c\
 			print_error_n_exit.c
 			
 SRCS_BONUS= 

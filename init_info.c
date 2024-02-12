@@ -58,6 +58,7 @@ static int	check_digit_n_exit(const char *str)
 t_const	*init_const_info(int argc, char **argv)
 {
 	t_const	*const_info;
+	int		idx;
 
 	// check invalid argument count
 	if (!(5 <= argc && argc <= 6))
@@ -65,13 +66,20 @@ t_const	*init_const_info(int argc, char **argv)
 	
 	const_info = (t_const *)ft_calloc(1, sizeof(t_const));
 	const_info->p_cnt = check_digit_n_exit(argv[1]);
-	const_info->t_die = check_digit_n_exit(argv[2]);
-	const_info->t_eat = check_digit_n_exit(argv[3]);
-	const_info->t_sleep = check_digit_n_exit(argv[4]);
+	const_info->t_die = check_digit_n_exit(argv[2]) * MILLI;
+	const_info->t_eat = check_digit_n_exit(argv[3]) * MILLI;
+	const_info->t_sleep = check_digit_n_exit(argv[4]) * MILLI;
 	if (argc == 6)
 		const_info->n_eat = check_digit_n_exit(argv[5]);
 	const_info->fork = (int *)ft_calloc(const_info->p_cnt, sizeof(int));
 	const_info->ready = (pthread_mutex_t *)ft_calloc(1, sizeof(pthread_mutex_t));
+	const_info->m_fork = (pthread_mutex_t *)ft_calloc(const_info->p_cnt, sizeof(pthread_mutex_t));
+	idx = 0;
+	while (idx < const_info->p_cnt)
+	{
+		pthread_mutex_init(&(const_info->m_fork[idx]), NULL); // check error
+		idx++;
+	}
 	return (const_info);
 }
 

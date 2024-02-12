@@ -17,25 +17,30 @@
 # include <stdio.h>
 # include <pthread.h>
 # include <stdlib.h> // NULL?
+# include <sys/time.h> // gettimeofday
 
 typedef struct s_const
 {
+	int				p_cnt; // cnt of philos
+	int				t_die; // time to die
+	int				t_eat; // time to eat
+	int				t_sleep; // time to sleep
+	int				*fork; // all forks
+	int				n_eat; // cnt of eating
+	time_t			start_time;
+	// make all thread start at once
 	pthread_mutex_t	*ready;
-	int				p_cnt;
-	int				t_die;
-	int				t_eat;
-	int				t_sleep;
-	int				*fork;
-	int				n_eat;
+	pthread_mutex_t	*m_fork; // fork mutex
 }	t_const;
 
 typedef struct s_info
 {
-	pthread_mutex_t	*wait;
-	int				p_num;
-	int				*my_forks[2];
-	int				n_eat;
+	int				p_num; // philo number
+	int				my_forks[2];
+	pthread_mutex_t	*chk_forks[2];
+	int				n_eat; // 
 	t_const			*const_info;
+	// pthread_mutex_t	wait;
 }	t_info;
 
 # define TRUE 1
@@ -44,6 +49,7 @@ typedef struct s_info
 # define FULL 1
 # define EMPTY 0
 
+# define MILLI 1000
 
 // philo do
 # define EATING 1
@@ -70,6 +76,15 @@ t_info		*init_info(t_const *const_info);
 
 // do_philo.c
 void		*do_philo(void *cont);
+
+// do_eating.c
+void	do_eating(t_info *info);
+
+// do_sleeping.c
+void    do_sleeping(t_info *info);
+
+// do_thinking.c
+void    do_thinking (t_info *info);
 
 // printf_error_n_exit.c
 void		print_error_n_exit(int which);
