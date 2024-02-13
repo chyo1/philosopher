@@ -6,7 +6,7 @@
 /*   By: hyowchoi <hyowchoi@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 18:41:17 by hyowchoi          #+#    #+#             */
-/*   Updated: 2024/02/09 17:55:32 by hyowchoi         ###   ########.fr       */
+/*   Updated: 2024/02/13 12:03:13 by hyowchoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ typedef struct s_const
 typedef struct s_info
 {
 	int				p_num; // philo number
-	int				my_forks[2];
+	int				*my_forks[2];
 	pthread_mutex_t	*chk_forks[2];
 	int				n_eat; // 
 	t_const			*const_info;

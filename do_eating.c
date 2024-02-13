@@ -12,28 +12,28 @@ static int	check_forks(t_info *info)
 
 	// check left_fork
 	pthread_mutex_lock(info->chk_forks[first]);
-	if (info->my_forks[first] == FULL)
+	if (*info->my_forks[first] == FULL)
     {
-	    pthread_mutex_unlock(info->chk_forks[first]); 
+		pthread_mutex_unlock(info->chk_forks[first]); 
         return (FALSE);
     }
-    info->my_forks[first] = FULL;
+    *info->my_forks[first] = FULL;
     gettimeofday(&now, NULL);
     printf("%ld %d has taken a fork\n", 
-        now.tv_sec - info->const_info->start_time, info->p_num);
+        (now.tv_usec - info->const_info->start_time) / MILLI, info->p_num);
 	pthread_mutex_unlock(info->chk_forks[first]);
 
 	// check right fork
 	pthread_mutex_lock(info->chk_forks[second]);
-    if (info->my_forks[second] == FULL)
+    if (*info->my_forks[second] == FULL)
     {
-	    pthread_mutex_unlock(info->chk_forks[second]); 
+		pthread_mutex_unlock(info->chk_forks[second]); 
         return (FALSE);
     }
-    info->my_forks[second] = FULL;
+    *info->my_forks[second] = FULL;
     gettimeofday(&now, NULL);
     printf("%ld %d has taken a fork\n", 
-        now.tv_sec - info->const_info->start_time, info->p_num);
+    	(now.tv_usec - info->const_info->start_time) / MILLI, info->p_num);
 	pthread_mutex_unlock(info->chk_forks[second]);
 	return (TRUE);
 }
@@ -72,7 +72,7 @@ void	do_eating(t_info *info)
 	{
 		gettimeofday(&now, NULL);
 		printf("%ld %d is eating\n", 
-			now.tv_sec - info->const_info->start_time, info->p_num);
+			(now.tv_usec - info->const_info->start_time) / MILLI, info->p_num);
 	
 		usleep(info->const_info->t_eat);
 		do_sleeping(info);

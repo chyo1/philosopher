@@ -7,7 +7,7 @@ void    do_sleeping(t_info *info)
     
     gettimeofday(&now, NULL);
 		printf("%ld %d is sleeping\n", 
-			now.tv_sec - info->const_info->start_time, info->p_num);
+			(now.tv_usec - info->const_info->start_time) / MILLI, info->p_num);
     usleep(info->const_info->t_sleep);
 	do_thinking(info);
 }
