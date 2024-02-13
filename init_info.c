@@ -71,6 +71,8 @@ t_const	*init_const_info(int argc, char **argv)
 	const_info->t_sleep = check_digit_n_exit(argv[4]) * MILLI;
 	if (argc == 6)
 		const_info->n_eat = check_digit_n_exit(argv[5]);
+	else
+		const_info->n_eat = -1;
 	const_info->fork = (int *)ft_calloc(const_info->p_cnt, sizeof(int));
 	const_info->ready = (pthread_mutex_t *)ft_calloc(1, sizeof(pthread_mutex_t));
 	const_info->m_fork = (pthread_mutex_t *)ft_calloc(const_info->p_cnt, sizeof(pthread_mutex_t));

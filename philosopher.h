@@ -6,7 +6,7 @@
 /*   By: hyowchoi <hyowchoi@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 18:41:17 by hyowchoi          #+#    #+#             */
-/*   Updated: 2024/02/13 12:03:13 by hyowchoi         ###   ########.fr       */
+/*   Updated: 2024/02/13 19:59:25 by hyowchoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ typedef struct s_const
 	int				t_sleep; // time to sleep
 	int				*fork; // all forks
 	int				n_eat; // cnt of eating
-	time_t			start_time;
+	long long		start_time;
 	// make all thread start at once
 	pthread_mutex_t	*ready;
 	pthread_mutex_t	*m_fork; // fork mutex
@@ -38,6 +38,7 @@ typedef struct s_info
 	int				p_num; // philo number
 	int				*my_forks[2];
 	pthread_mutex_t	*chk_forks[2];
+	long long		last_eat;
 	int				n_eat; // 
 	t_const			*const_info;
 	// pthread_mutex_t	wait;
@@ -49,12 +50,16 @@ typedef struct s_info
 # define FULL 1
 # define EMPTY 0
 
+# define MICRO 1000000
 # define MILLI 1000
+# define SLEEP_TIME 100
 
 // philo do
+# define TAKE_FORK 0
 # define EATING 1
 # define SLEEPING 2
 # define THINKING 3
+# define DEAD 4
 
 // error type
 # define INVALID_ARG_NUM 0
@@ -78,15 +83,20 @@ t_info		*init_info(t_const *const_info);
 void		*do_philo(void *cont);
 
 // do_eating.c
-void	do_eating(t_info *info);
+int	do_eating(t_info *info);
 
 // do_sleeping.c
-void    do_sleeping(t_info *info);
+int    do_sleeping(t_info *info);
 
 // do_thinking.c
-void    do_thinking (t_info *info);
+int    do_thinking (t_info *info);
+
+// check_died.c
+int		check_died(t_info *info);
+int		check_died_while_sleeping(long long last_eat, long long dead_time, long long total_sleep_time);
 
 // printf_error_n_exit.c
-void		print_error_n_exit(int which);
+void	print_error_n_exit(int which);
+void	print_doing(t_info *info, int which, long long start_time, int p_num);
 
 #endif

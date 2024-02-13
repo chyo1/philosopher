@@ -1,13 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   do_thinking.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hyowchoi <hyowchoi@student.42seoul.kr>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/02/13 12:50:54 by hyowchoi          #+#    #+#             */
+/*   Updated: 2024/02/13 19:51:52 by hyowchoi         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 
 #include "philosopher.h"
 
-void    do_thinking (t_info *info)
+int    do_thinking (t_info *info)
 {
-	struct timeval	now; // to get the now time
-
-    gettimeofday(&now, NULL);
-		printf("%ld %d is thinking\n", 
-			(now.tv_usec - info->const_info->start_time) / MILLI, info->p_num);
-	
-		usleep(info->const_info->t_eat);
+	print_doing(info, THINKING, info->const_info->start_time, info->p_num);
+	return (FALSE);
 }

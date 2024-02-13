@@ -2,3 +2,4 @@ LAST*
 *.dSYM/
 debug
 philo
+.vscode/
