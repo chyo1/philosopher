@@ -6,7 +6,7 @@
 /*   By: hyowchoi <hyowchoi@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 12:50:35 by hyowchoi          #+#    #+#             */
-/*   Updated: 2024/02/13 20:11:07 by hyowchoi         ###   ########.fr       */
+/*   Updated: 2024/02/13 20:21:24 by hyowchoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,9 @@ static int	check_forks(t_info *info)
 		if (*info->my_forks[second] == FULL)
 		{
 			pthread_mutex_unlock(info->chk_forks[second]);
+			pthread_mutex_lock(info->chk_forks[first]);
 			*info->my_forks[first] = EMPTY;
+			pthread_mutex_unlock(info->chk_forks[first]);
 			continue ;
 		}
 		*info->my_forks[second] = FULL;

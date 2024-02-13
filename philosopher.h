@@ -6,7 +6,7 @@
 /*   By: hyowchoi <hyowchoi@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 18:41:17 by hyowchoi          #+#    #+#             */
-/*   Updated: 2024/02/13 20:10:52 by hyowchoi         ###   ########.fr       */
+/*   Updated: 2024/02/13 20:41:04 by hyowchoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,11 @@ typedef struct s_const
 	int				*fork; // all forks
 	int				n_eat; // cnt of eating
 	long long		start_time;
+	int				*is_thread_dead;
 	// make all thread start at once
 	pthread_mutex_t	*ready;
 	pthread_mutex_t	*m_fork; // fork mutex
+	pthread_mutex_t	*check_dead_thread;
 }	t_const;
 
 typedef struct s_info
