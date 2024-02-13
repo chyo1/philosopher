@@ -6,11 +6,26 @@
 /*   By: hyowchoi <hyowchoi@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 18:38:31 by hyowchoi          #+#    #+#             */
-/*   Updated: 2024/02/13 11:56:33 by hyowchoi         ###   ########.fr       */
+/*   Updated: 2024/02/13 12:24:33 by hyowchoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosopher.h"
+
+
+int	wait_threads(pthread_t *philo_tid, int p_cnt)
+{
+	int	status;
+	int	idx;
+
+	idx = 0;
+	while (idx < p_cnt)
+	{
+		pthread_join(philo_tid[idx], (void *)&status);
+		idx++;
+	}
+	return (status);
+}
 
 /* 	number_of_philosophers, 
 	time_to_die, 
@@ -35,13 +50,5 @@ int	main(int argc, char **argv)
 	make_philo_thread(const_info, philo_tid);
 	pthread_mutex_unlock(const_info->ready);
 
-		int		idx;
-
-	idx = 0;
-	while (idx < const_info->p_cnt)
-	{
-		pthread_join(philo_tid[idx], NULL);
-			// print_error_n_exit(THREAD_CREATE_ERROR);
-		idx++;
-	}
+	return(wait_threads(philo_tid, const_info->p_cnt));
 }
