@@ -6,7 +6,7 @@
 /*   By: hyowchoi <hyowchoi@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 18:41:17 by hyowchoi          #+#    #+#             */
-/*   Updated: 2024/02/13 19:59:25 by hyowchoi         ###   ########.fr       */
+/*   Updated: 2024/02/13 20:10:52 by hyowchoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ int    do_thinking (t_info *info);
 
 // check_died.c
 int		check_died(t_info *info);
-int		check_died_while_sleeping(long long last_eat, long long dead_time, long long total_sleep_time);
+int 	check_died_while_sleeping(t_info *info, long long total_sleep_time);
 
 // printf_error_n_exit.c
 void	print_error_n_exit(int which);

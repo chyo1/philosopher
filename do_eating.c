@@ -6,7 +6,7 @@
 /*   By: hyowchoi <hyowchoi@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 12:50:35 by hyowchoi          #+#    #+#             */
-/*   Updated: 2024/02/13 19:57:21 by hyowchoi         ###   ########.fr       */
+/*   Updated: 2024/02/13 20:11:07 by hyowchoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ int	do_eating(t_info *info)
 	if (check_forks(info))
 		return (TRUE);
 	print_doing(info, EATING, info->const_info->start_time, info->p_num);
-	if (check_died_while_sleeping(info->last_eat, info->const_info->t_die, info->const_info->t_eat))
+	if (check_died_while_sleeping(info, info->const_info->t_eat))
 			return (TRUE);
 	// usleep(info->const_info->t_eat);
 	if (info->n_eat > 0)

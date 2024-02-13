@@ -6,7 +6,7 @@
 /*   By: hyowchoi <hyowchoi@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 15:27:15 by hyowchoi          #+#    #+#             */
-/*   Updated: 2024/02/13 19:54:53 by hyowchoi         ###   ########.fr       */
+/*   Updated: 2024/02/13 20:11:31 by hyowchoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	*do_philo(void *cont)
 	if (info->p_num % 2)
 	{
 		// even num philo eat first
-		if (check_died_while_sleeping(info->last_eat, info->const_info->t_die, (info->const_info->t_eat) / 2))
+		if (check_died_while_sleeping(info, (info->const_info->t_eat) / 2))
 			return (NULL);
 	}
 	while (1)

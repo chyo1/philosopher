@@ -6,7 +6,7 @@
 /*   By: hyowchoi <hyowchoi@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 16:00:53 by hyowchoi          #+#    #+#             */
-/*   Updated: 2024/02/13 19:59:15 by hyowchoi         ###   ########.fr       */
+/*   Updated: 2024/02/13 20:10:42 by hyowchoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,16 @@ int	check_died(t_info *info)
 	return (FALSE);
 }
 
-int check_died_while_sleeping(long long last_eat, long long dead_time, long long total_sleep_time)
+int check_died_while_sleeping(t_info *info, long long total_sleep_time)
 {
 	long long	end_time;
 	long long	now_time;
+	long long	dead_time;
+	long long	last_eat;
 	struct timeval	now; // to get the now time
 
+	dead_time = info->const_info->t_die;
+	last_eat = info->last_eat;
 	gettimeofday(&now, NULL);
 	end_time = now.tv_sec * MICRO + now.tv_usec + total_sleep_time;
 	while (1)
@@ -46,7 +50,10 @@ int check_died_while_sleeping(long long last_eat, long long dead_time, long long
 
 		// thread is died
 		if (last_eat + dead_time < now_time)
+		{
+			print_doing(info, DEAD, info->const_info->start_time, info->p_num);
 			return (TRUE);
+		}
 		usleep(SLEEP_TIME);
 	}
 	return (FALSE);
