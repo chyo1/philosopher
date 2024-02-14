@@ -6,7 +6,7 @@
 /*   By: hyowchoi <hyowchoi@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 16:00:53 by hyowchoi          #+#    #+#             */
-/*   Updated: 2024/02/14 20:43:38 by hyowchoi         ###   ########.fr       */
+/*   Updated: 2024/02/14 21:12:34 by hyowchoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	check_died(t_info *info)
 
 	dead_time = info->const_info->t_die;
 	now_time = get_now_time();
-	if (now_time - info->t_last_eat > dead_time)
+	if (now_time - info->t_last_eat >= dead_time)
 	{
 		pthread_mutex_lock(info->const_info->check_dead_thread);
 		*info->const_info->is_thread_dead = TRUE;
@@ -60,7 +60,7 @@ int check_died_while_waiting(t_info *info, long long total_sleep_time)
 		now_time = get_now_time();
 
 		// wakeup
-		if (end_time < now_time)
+		if (end_time <= now_time)
 			return (FALSE) ;
 
 		// thread is died
