@@ -6,7 +6,7 @@
 /*   By: hyowchoi <hyowchoi@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 19:39:37 by hyowchoi          #+#    #+#             */
-/*   Updated: 2024/02/14 17:57:29 by hyowchoi         ###   ########.fr       */
+/*   Updated: 2024/02/14 20:43:38 by hyowchoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	print_doing(t_info *info, int which, long long start_time, int p_num)
 		printf("%lld %d has taken a fork\n", (now_time - start_time) / MILLI, p_num);
 	else if (which == EATING)
 	{
-		info->last_eat = now_time;
+		info->t_last_eat = now_time;
 		printf("%lld %d is eating\n", (now_time - start_time) / MILLI, p_num);
 	}
 	else if (which == SLEEPING)

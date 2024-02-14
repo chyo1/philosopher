@@ -6,7 +6,7 @@
 /*   By: hyowchoi <hyowchoi@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 12:50:35 by hyowchoi          #+#    #+#             */
-/*   Updated: 2024/02/14 18:16:40 by hyowchoi         ###   ########.fr       */
+/*   Updated: 2024/02/14 20:33:06 by hyowchoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,64 +14,47 @@
 
 static int	check_forks(t_info *info)
 {
-	int	first;
-	int	second;
-	
-	// first = (info->p_num) % 2;
-	// second = (info->p_num + 1) % 2;
-	first = 0;
-	second = 1;
+	// check left fork
 	while (!check_died(info))
 	{
-		// check left_fork
-		pthread_mutex_lock(info->chk_forks[first]);
-		if (*info->my_forks[first] == FULL)
+		pthread_mutex_lock(info->chk_forks[0]);
+		if (*info->my_forks[0] == EMPTY)
 		{
-			pthread_mutex_unlock(info->chk_forks[first]); 
-			continue ;
+			*info->my_forks[0] = FULL;
+			pthread_mutex_unlock(info->chk_forks[0]);
+			print_doing(info, TAKE_FORK, info->const_info->start_time, info->p_num);
+			break ;
 		}
-		*info->my_forks[first] = FULL;
-		print_doing(info, TAKE_FORK, info->const_info->start_time, info->p_num);
-		pthread_mutex_unlock(info->chk_forks[first]);
-		break ;
+		pthread_mutex_unlock(info->chk_forks[0]); 
 	}
+
+	// check right fork
 	while (!check_died(info))
 	{
-		// check right fork
-		pthread_mutex_lock(info->chk_forks[second]);
-		if (*info->my_forks[second] == FULL)
+		pthread_mutex_lock(info->chk_forks[1]);
+		if (*info->my_forks[1] == EMPTY)
 		{
-			pthread_mutex_unlock(info->chk_forks[second]);
-			continue ;
+			*info->my_forks[1] = FULL;
+			pthread_mutex_unlock(info->chk_forks[1]);
+			print_doing(info, TAKE_FORK, info->const_info->start_time, info->p_num);
+			return (FALSE);
 		}
-		*info->my_forks[second] = FULL;
-		print_doing(info, TAKE_FORK, info->const_info->start_time, info->p_num);
-		pthread_mutex_unlock(info->chk_forks[second]);
-		return (FALSE);
+		pthread_mutex_unlock(info->chk_forks[1]);
 	}
 	return (TRUE);
 }
 
 static void	free_forks(t_info *info)
 {
-	int	first;
-	int	second;
-
-	// first = (info->p_num + 1) % 2;
-	// second = info->p_num % 2;
-
-	first = 1;
-	second = 0;
-
 	// free left_fork
-	pthread_mutex_lock(info->chk_forks[first]);
-	*info->my_forks[first] = EMPTY;
-	pthread_mutex_unlock(info->chk_forks[first]);
+	pthread_mutex_lock(info->chk_forks[0]);
+	*info->my_forks[0] = EMPTY;
+	pthread_mutex_unlock(info->chk_forks[0]);
 
 	// free right fork
-	pthread_mutex_lock(info->chk_forks[second]);
-	*info->my_forks[second] = EMPTY;
-	pthread_mutex_unlock(info->chk_forks[second]);
+	pthread_mutex_lock(info->chk_forks[1]);
+	*info->my_forks[1] = EMPTY;
+	pthread_mutex_unlock(info->chk_forks[1]);
 }
 
 int	do_eating(t_info *info)
@@ -80,9 +63,8 @@ int	do_eating(t_info *info)
 	if (check_forks(info))
 		return (TRUE);
 	print_doing(info, EATING, info->const_info->start_time, info->p_num);
-	if (check_died_while_sleeping(info, info->const_info->t_eat))
+	if (check_died_while_waiting(info, info->const_info->t_eat))
 			return (TRUE);
-	// usleep(info->const_info->t_eat);
 	if (info->n_eat > 0)
 		info->n_eat--;
 	if (info->n_eat == 0)

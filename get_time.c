@@ -1,25 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   do_sleeping.c                                      :+:      :+:    :+:   */
+/*   get_time.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hyowchoi <hyowchoi@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/13 12:50:45 by hyowchoi          #+#    #+#             */
-/*   Updated: 2024/02/14 20:26:57 by hyowchoi         ###   ########.fr       */
+/*   Created: 2024/02/14 20:20:42 by hyowchoi          #+#    #+#             */
+/*   Updated: 2024/02/14 20:21:28 by hyowchoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "philosopher.h"
 
-int    do_sleeping(t_info *info)
+long long	get_now_time(void)
 {
-	if (check_died(info))
-		return (TRUE);
-	print_doing(info, SLEEPING, info->const_info->start_time, info->p_num);
-	if (check_died_while_waiting(info, info->const_info->t_sleep))
-			return (TRUE);
-    // usleep(info->const_info->t_sleep);
-	return (FALSE);
+	struct timeval	time;
+
+	gettimeofday(&time, NULL);
+	return (time.tv_sec * MICRO + time.tv_usec);
 }

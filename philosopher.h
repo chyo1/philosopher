@@ -6,7 +6,7 @@
 /*   By: hyowchoi <hyowchoi@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 18:41:17 by hyowchoi          #+#    #+#             */
-/*   Updated: 2024/02/13 20:41:04 by hyowchoi         ###   ########.fr       */
+/*   Updated: 2024/02/14 20:43:38 by hyowchoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ typedef struct s_const
 	long long		start_time;
 	int				*is_thread_dead;
 	// make all thread start at once
-	pthread_mutex_t	*ready;
 	pthread_mutex_t	*m_fork; // fork mutex
+	pthread_mutex_t	*ready;
 	pthread_mutex_t	*check_dead_thread;
 }	t_const;
 
@@ -40,7 +40,7 @@ typedef struct s_info
 	int				p_num; // philo number
 	int				*my_forks[2];
 	pthread_mutex_t	*chk_forks[2];
-	long long		last_eat;
+	long long		t_last_eat;
 	int				n_eat; // 
 	t_const			*const_info;
 	// pthread_mutex_t	wait;
@@ -79,7 +79,6 @@ pthread_t	*init_tid(int philo_num);
 
 // make_philo_thread.c
 void		make_philo_thread(t_const *const_info, pthread_t *philo_tid);
-t_info		*init_info(t_const *const_info);
 
 // do_philo.c
 void		*do_philo(void *cont);
@@ -95,7 +94,10 @@ int    do_thinking (t_info *info);
 
 // check_died.c
 int		check_died(t_info *info);
-int 	check_died_while_sleeping(t_info *info, long long total_sleep_time);
+int 	check_died_while_waiting(t_info *info, long long total_sleep_time);
+
+// get_time.c
+long long	get_now_time(void);
 
 // printf_error_n_exit.c
 void	print_error_n_exit(int which);

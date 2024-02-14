@@ -6,24 +6,22 @@
 /*   By: hyowchoi <hyowchoi@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 15:27:15 by hyowchoi          #+#    #+#             */
-/*   Updated: 2024/02/14 17:38:24 by hyowchoi         ###   ########.fr       */
+/*   Updated: 2024/02/14 20:43:38 by hyowchoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosopher.h"
 
-void	init_philo_info(t_info *info)
+static void	init_philo_info(t_info *info)
 {
 	int		p_cnt;
-	struct timeval	now; // to get the now time
 
 	p_cnt = info->const_info->p_cnt;
 	pthread_mutex_lock(info->const_info->ready);
 	pthread_mutex_unlock(info->const_info->ready);
-	
+
 	// to check_dead_time
-	gettimeofday(&now, NULL);
-	info->last_eat = now.tv_sec * MICRO + now.tv_usec;
+	info->t_last_eat = get_now_time();
 
 	info->chk_forks[0] = &(info->const_info->m_fork[info->p_num]);
 	info->chk_forks[1] = &(info->const_info->m_fork[(info->p_num + 1) % p_cnt]);
@@ -40,7 +38,7 @@ void	*do_philo(void *cont)
 	if (info->p_num % 2)
 	{
 		// even num philo eat first
-		if (check_died_while_sleeping(info, info->const_info->t_eat))
+		if (check_died_while_waiting(info, info->const_info->t_eat))
 			return (NULL);
 	}
 	while (1)

@@ -6,11 +6,21 @@
 /*   By: hyowchoi <hyowchoi@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 18:52:37 by hyowchoi          #+#    #+#             */
-/*   Updated: 2024/02/14 16:32:01 by hyowchoi         ###   ########.fr       */
+/*   Updated: 2024/02/14 20:25:05 by hyowchoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosopher.h"
+
+static t_info	*init_info(t_const *const_info)
+{
+	t_info	*info;
+
+	info = (t_info *)ft_calloc(1, sizeof(t_info));
+	info->const_info = const_info;
+	info->n_eat = const_info->n_eat;
+	return (info);
+}
 
 void	make_philo_thread(t_const *const_info, pthread_t *philo_tid)
 {
@@ -26,14 +36,4 @@ void	make_philo_thread(t_const *const_info, pthread_t *philo_tid)
 			print_error_n_exit(THREAD_CREATE_ERROR);
 		idx++;
 	}
-}
-
-t_info	*init_info(t_const *const_info)
-{
-	t_info	*info;
-
-	info = (t_info *)ft_calloc(1, sizeof(t_info));
-	info->const_info = const_info;
-	info->n_eat = const_info->n_eat;
-	return (info);
 }

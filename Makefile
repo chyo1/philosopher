@@ -6,7 +6,8 @@ SRCS_MAN=	main.c\
 			init_info.c make_philo_thread.c\
 			do_philo.c\
 			do_eating.c do_sleeping.c do_thinking.c check_died.c\
-			print_error_n_exit.c
+			print_error_n_exit.c\
+			get_time.c
 			
 SRCS_BONUS= 
 .PHONY : all bonus clean fclean re

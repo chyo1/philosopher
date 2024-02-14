@@ -55,10 +55,23 @@ static int	check_digit_n_exit(const char *str)
 	return (num);
 }
 
+void	init_const_info_mutexs(t_const *const_info)
+{
+	int	idx;
+
+	idx = 0;
+	while (idx < const_info->p_cnt)
+	{
+		pthread_mutex_init(&(const_info->m_fork[idx]), NULL); // check error
+		idx++;
+	}
+	pthread_mutex_init(const_info->ready, NULL);
+	pthread_mutex_init(const_info->check_dead_thread, NULL);
+}
+
 t_const	*init_const_info(int argc, char **argv)
 {
 	t_const	*const_info;
-	int		idx;
 
 	// check invalid argument count
 	if (!(5 <= argc && argc <= 6))
@@ -78,13 +91,7 @@ t_const	*init_const_info(int argc, char **argv)
 	const_info->ready = (pthread_mutex_t *)ft_calloc(1, sizeof(pthread_mutex_t));
 	const_info->check_dead_thread = (pthread_mutex_t *)ft_calloc(1, sizeof(pthread_mutex_t));
 	const_info->is_thread_dead = (int *)ft_calloc(1, sizeof(int));
-	idx = 0;
-	while (idx < const_info->p_cnt)
-	{
-		pthread_mutex_init(&(const_info->m_fork[idx]), NULL); // check error
-		idx++;
-	}
-	pthread_mutex_init(const_info->check_dead_thread, NULL);
+	init_const_info_mutexs(const_info);
 	return (const_info);
 }
 

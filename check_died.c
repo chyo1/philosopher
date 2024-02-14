@@ -6,7 +6,7 @@
 /*   By: hyowchoi <hyowchoi@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 16:00:53 by hyowchoi          #+#    #+#             */
-/*   Updated: 2024/02/14 19:14:21 by hyowchoi         ###   ########.fr       */
+/*   Updated: 2024/02/14 20:43:38 by hyowchoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ int	check_died(t_info *info)
 {
 	long long	dead_time;
 	long long	now_time;
-	struct timeval	now; // to get the now time
 
 	pthread_mutex_lock(info->const_info->check_dead_thread);
 	if (*info->const_info->is_thread_dead == TRUE)
@@ -24,15 +23,12 @@ int	check_died(t_info *info)
 		pthread_mutex_unlock(info->const_info->check_dead_thread);
 		return (TRUE);
 	}
-	else
-		pthread_mutex_unlock(info->const_info->check_dead_thread);
-	dead_time = info->const_info->t_die;
-	gettimeofday(&now, NULL);
-	now_time = now.tv_sec * MICRO + now.tv_usec;
+	pthread_mutex_unlock(info->const_info->check_dead_thread);
 
-	if (now_time - info->last_eat > dead_time)
+	dead_time = info->const_info->t_die;
+	now_time = get_now_time();
+	if (now_time - info->t_last_eat > dead_time)
 	{
-		// printf("\n%lld %lld %lld %lld\n", now_time, info->last_eat, dead_time, now_time- info->last_eat);
 		pthread_mutex_lock(info->const_info->check_dead_thread);
 		*info->const_info->is_thread_dead = TRUE;
 		pthread_mutex_unlock(info->const_info->check_dead_thread);
@@ -42,19 +38,15 @@ int	check_died(t_info *info)
 	return (FALSE);
 }
 
-int check_died_while_sleeping(t_info *info, long long total_sleep_time)
+int check_died_while_waiting(t_info *info, long long total_sleep_time)
 {
 	long long	end_time;
 	long long	now_time;
 	long long	dead_time;
-	long long	last_eat;
-	struct timeval	now; // to get the now time
 
 	dead_time = info->const_info->t_die;
-	last_eat = info->last_eat;
-	gettimeofday(&now, NULL);
-	end_time = now.tv_sec * MICRO + now.tv_usec + total_sleep_time;
-	while (1)
+	end_time = get_now_time() + total_sleep_time;
+	while (!check_died(info))
 	{
 		pthread_mutex_lock(info->const_info->check_dead_thread);
 		if (*info->const_info->is_thread_dead == TRUE)
@@ -64,14 +56,15 @@ int check_died_while_sleeping(t_info *info, long long total_sleep_time)
 		}
 		else
 			pthread_mutex_unlock(info->const_info->check_dead_thread);
-		gettimeofday(&now, NULL);
-		now_time = now.tv_sec * MICRO + now.tv_usec;
-		
+
+		now_time = get_now_time();
+
 		// wakeup
 		if (end_time < now_time)
-			break ;
+			return (FALSE) ;
+
 		// thread is died
-		if (last_eat + dead_time < now_time)
+		if (info->t_last_eat + dead_time < now_time)
 		{
 			pthread_mutex_lock(info->const_info->check_dead_thread);
 			*info->const_info->is_thread_dead = TRUE;
@@ -81,5 +74,5 @@ int check_died_while_sleeping(t_info *info, long long total_sleep_time)
 		}
 		usleep(SLEEP_TIME);
 	}
-	return (FALSE);
+	return (TRUE);
 }
