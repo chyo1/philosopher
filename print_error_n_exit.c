@@ -6,7 +6,7 @@
 /*   By: hyowchoi <hyowchoi@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 19:39:37 by hyowchoi          #+#    #+#             */
-/*   Updated: 2024/02/13 17:15:09 by hyowchoi         ###   ########.fr       */
+/*   Updated: 2024/02/14 17:57:29 by hyowchoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,14 @@ void	print_doing(t_info *info, int which, long long start_time, int p_num)
 	struct timeval	now; // to get the now time
 	long long now_time;
 	
-	gettimeofday(&now, NULL);
+	pthread_mutex_lock(info->const_info->check_dead_thread);
+	if (*info->const_info->is_thread_dead == TRUE)
+	{
+		which = DEAD;
+	}
+	pthread_mutex_unlock(info->const_info->check_dead_thread);
 
-	
+	gettimeofday(&now, NULL);
 	now_time = now.tv_sec * MICRO + now.tv_usec;
 	if (which == TAKE_FORK)
 		printf("%lld %d has taken a fork\n", (now_time - start_time) / MILLI, p_num);

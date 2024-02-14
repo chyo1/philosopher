@@ -74,16 +74,17 @@ t_const	*init_const_info(int argc, char **argv)
 	else
 		const_info->n_eat = -1;
 	const_info->fork = (int *)ft_calloc(const_info->p_cnt, sizeof(int));
-	const_info->ready = (pthread_mutex_t *)ft_calloc(1, sizeof(pthread_mutex_t));
 	const_info->m_fork = (pthread_mutex_t *)ft_calloc(const_info->p_cnt, sizeof(pthread_mutex_t));
+	const_info->ready = (pthread_mutex_t *)ft_calloc(1, sizeof(pthread_mutex_t));
 	const_info->check_dead_thread = (pthread_mutex_t *)ft_calloc(1, sizeof(pthread_mutex_t));
-	const_info->is_thread_dead = (int*)ft_calloc(1, sizeof(int));
+	const_info->is_thread_dead = (int *)ft_calloc(1, sizeof(int));
 	idx = 0;
 	while (idx < const_info->p_cnt)
 	{
 		pthread_mutex_init(&(const_info->m_fork[idx]), NULL); // check error
 		idx++;
 	}
+	pthread_mutex_init(const_info->check_dead_thread, NULL);
 	return (const_info);
 }
 

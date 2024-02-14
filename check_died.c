@@ -6,7 +6,7 @@
 /*   By: hyowchoi <hyowchoi@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 16:00:53 by hyowchoi          #+#    #+#             */
-/*   Updated: 2024/02/13 20:50:40 by hyowchoi         ###   ########.fr       */
+/*   Updated: 2024/02/14 19:14:21 by hyowchoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,15 @@ int	check_died(t_info *info)
 		pthread_mutex_unlock(info->const_info->check_dead_thread);
 		return (TRUE);
 	}
+	else
+		pthread_mutex_unlock(info->const_info->check_dead_thread);
 	dead_time = info->const_info->t_die;
-	now_time = now.tv_sec * MICRO + now.tv_usec;
 	gettimeofday(&now, NULL);
+	now_time = now.tv_sec * MICRO + now.tv_usec;
+
 	if (now_time - info->last_eat > dead_time)
 	{
+		// printf("\n%lld %lld %lld %lld\n", now_time, info->last_eat, dead_time, now_time- info->last_eat);
 		pthread_mutex_lock(info->const_info->check_dead_thread);
 		*info->const_info->is_thread_dead = TRUE;
 		pthread_mutex_unlock(info->const_info->check_dead_thread);
@@ -58,13 +62,14 @@ int check_died_while_sleeping(t_info *info, long long total_sleep_time)
 			pthread_mutex_unlock(info->const_info->check_dead_thread);
 			return (TRUE);
 		}
+		else
+			pthread_mutex_unlock(info->const_info->check_dead_thread);
 		gettimeofday(&now, NULL);
 		now_time = now.tv_sec * MICRO + now.tv_usec;
 		
 		// wakeup
 		if (end_time < now_time)
-			break;
-
+			break ;
 		// thread is died
 		if (last_eat + dead_time < now_time)
 		{

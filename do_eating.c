@@ -6,7 +6,7 @@
 /*   By: hyowchoi <hyowchoi@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 12:50:35 by hyowchoi          #+#    #+#             */
-/*   Updated: 2024/02/13 20:21:24 by hyowchoi         ###   ########.fr       */
+/*   Updated: 2024/02/14 18:16:40 by hyowchoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,10 @@ static int	check_forks(t_info *info)
 	int	first;
 	int	second;
 	
-	first = (info->p_num) % 2;
-	second = (info->p_num + 1) % 2;
+	// first = (info->p_num) % 2;
+	// second = (info->p_num + 1) % 2;
+	first = 0;
+	second = 1;
 	while (!check_died(info))
 	{
 		// check left_fork
@@ -31,15 +33,15 @@ static int	check_forks(t_info *info)
 		*info->my_forks[first] = FULL;
 		print_doing(info, TAKE_FORK, info->const_info->start_time, info->p_num);
 		pthread_mutex_unlock(info->chk_forks[first]);
-
+		break ;
+	}
+	while (!check_died(info))
+	{
 		// check right fork
 		pthread_mutex_lock(info->chk_forks[second]);
 		if (*info->my_forks[second] == FULL)
 		{
 			pthread_mutex_unlock(info->chk_forks[second]);
-			pthread_mutex_lock(info->chk_forks[first]);
-			*info->my_forks[first] = EMPTY;
-			pthread_mutex_unlock(info->chk_forks[first]);
 			continue ;
 		}
 		*info->my_forks[second] = FULL;
@@ -55,8 +57,11 @@ static void	free_forks(t_info *info)
 	int	first;
 	int	second;
 
-	first = (info->p_num) % 2;
-	second = (info->p_num + 1) % 2;
+	// first = (info->p_num + 1) % 2;
+	// second = info->p_num % 2;
+
+	first = 1;
+	second = 0;
 
 	// free left_fork
 	pthread_mutex_lock(info->chk_forks[first]);

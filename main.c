@@ -6,7 +6,7 @@
 /*   By: hyowchoi <hyowchoi@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 18:38:31 by hyowchoi          #+#    #+#             */
-/*   Updated: 2024/02/13 20:40:58 by hyowchoi         ###   ########.fr       */
+/*   Updated: 2024/02/14 16:34:58 by hyowchoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,11 @@ int	main(int argc, char **argv)
 	struct timeval	time; // to get the start time
 
 	const_info = init_const_info(argc, argv);
+	if (const_info->p_cnt == 1)
+	{
+		printf("%d 1 died\n", const_info->t_die / MILLI);
+		return 0;
+	}
 	philo_tid = init_tid(const_info->p_cnt);
 
 	pthread_mutex_init(const_info->ready, NULL);
