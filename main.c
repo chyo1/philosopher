@@ -6,12 +6,11 @@
 /*   By: hyowchoi <hyowchoi@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 18:38:31 by hyowchoi          #+#    #+#             */
-/*   Updated: 2024/02/15 20:40:58 by hyowchoi         ###   ########.fr       */
+/*   Updated: 2024/02/15 21:07:51 by hyowchoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosopher.h"
-
 
 int	wait_threads(pthread_t *philo_tid, int p_cnt)
 {
@@ -22,8 +21,22 @@ int	wait_threads(pthread_t *philo_tid, int p_cnt)
 	{
 		pthread_join(philo_tid[idx], NULL);
 		idx++;
-		
 	}
+	return (0);
+}
+
+
+int free_resources(t_const *const_info, pthread_t *philo_tid)
+{
+	free(const_info->fork);
+	free(const_info->m_fork);
+	free(const_info->check_dead_thread);
+	free(const_info->is_thread_dead);
+	free(const_info->ready);
+	free(const_info->is_printable);
+	free(const_info->printable);
+	free(const_info);
+	free(philo_tid);
 	return (0);
 }
 
@@ -47,11 +60,17 @@ int	main(int argc, char **argv)
 
 	philo_tid = init_tid(const_info->p_cnt);
 
+	// to make all thread start at once
 	pthread_mutex_lock(const_info->ready);
 
 	const_info->start_time = get_now_time();
 	make_philo_thread(const_info, philo_tid);
 
 	pthread_mutex_unlock(const_info->ready);
-	return (wait_threads(philo_tid, const_info->p_cnt));
+
+	// wait for all threads to finish
+	wait_threads(philo_tid, const_info->p_cnt);
+		free_resources(const_info, philo_tid);
+	while (1);
+	return (0);
 }
