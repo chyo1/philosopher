@@ -6,7 +6,7 @@
 /*   By: hyowchoi <hyowchoi@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 12:50:35 by hyowchoi          #+#    #+#             */
-/*   Updated: 2024/02/14 20:33:06 by hyowchoi         ###   ########.fr       */
+/*   Updated: 2024/02/15 14:50:13 by hyowchoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,12 @@
 static int	check_forks(t_info *info)
 {
 	// check left fork
-	while (!check_died(info))
+	while (1)
 	{
+		// Is this thread dead?
+		check_died(info);
+		if (check_someone_died(info))
+			return (TRUE);
 		pthread_mutex_lock(info->chk_forks[0]);
 		if (*info->my_forks[0] == EMPTY)
 		{
@@ -29,8 +33,12 @@ static int	check_forks(t_info *info)
 	}
 
 	// check right fork
-	while (!check_died(info))
+	while (1)
 	{
+		// Is this thread dead?
+		check_died(info);
+		if (check_someone_died(info))
+			return (TRUE);
 		pthread_mutex_lock(info->chk_forks[1]);
 		if (*info->my_forks[1] == EMPTY)
 		{

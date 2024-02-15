@@ -67,6 +67,7 @@ void	init_const_info_mutexs(t_const *const_info)
 	}
 	pthread_mutex_init(const_info->ready, NULL);
 	pthread_mutex_init(const_info->check_dead_thread, NULL);
+	pthread_mutex_init(const_info->printable, NULL);
 }
 
 t_const	*init_const_info(int argc, char **argv)
@@ -91,6 +92,9 @@ t_const	*init_const_info(int argc, char **argv)
 	const_info->ready = (pthread_mutex_t *)ft_calloc(1, sizeof(pthread_mutex_t));
 	const_info->check_dead_thread = (pthread_mutex_t *)ft_calloc(1, sizeof(pthread_mutex_t));
 	const_info->is_thread_dead = (int *)ft_calloc(1, sizeof(int));
+	const_info->printable = (pthread_mutex_t *)ft_calloc(1, sizeof(pthread_mutex_t));
+	const_info->is_printable = (int *)ft_calloc(1, sizeof(int));
+	*const_info->is_printable = TRUE;
 	init_const_info_mutexs(const_info);
 	return (const_info);
 }

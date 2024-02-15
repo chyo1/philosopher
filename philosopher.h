@@ -6,7 +6,7 @@
 /*   By: hyowchoi <hyowchoi@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 18:41:17 by hyowchoi          #+#    #+#             */
-/*   Updated: 2024/02/14 20:43:38 by hyowchoi         ###   ########.fr       */
+/*   Updated: 2024/02/15 15:23:27 by hyowchoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,15 @@ typedef struct s_const
 	int				t_eat; // time to eat
 	int				t_sleep; // time to sleep
 	int				*fork; // all forks
+	pthread_mutex_t	*m_fork; // fork mutex
 	int				n_eat; // cnt of eating
 	long long		start_time;
-	int				*is_thread_dead;
 	// make all thread start at once
-	pthread_mutex_t	*m_fork; // fork mutex
 	pthread_mutex_t	*ready;
 	pthread_mutex_t	*check_dead_thread;
+	int				*is_thread_dead;
+	pthread_mutex_t	*printable;
+	int				*is_printable;
 }	t_const;
 
 typedef struct s_info
@@ -93,7 +95,8 @@ int    do_sleeping(t_info *info);
 int    do_thinking (t_info *info);
 
 // check_died.c
-int		check_died(t_info *info);
+void	check_died(t_info *info);
+int	check_someone_died(t_info *info);
 int 	check_died_while_waiting(t_info *info, long long total_sleep_time);
 
 // get_time.c
