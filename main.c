@@ -6,7 +6,7 @@
 /*   By: hyowchoi <hyowchoi@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 18:38:31 by hyowchoi          #+#    #+#             */
-/*   Updated: 2024/02/15 14:17:43 by hyowchoi         ###   ########.fr       */
+/*   Updated: 2024/02/15 17:41:56 by hyowchoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ int	main(int argc, char **argv)
 	const_info = init_const_info(argc, argv);
 	if (const_info->p_cnt == 1)
 	{
+		usleep(const_info->t_die);
 		printf("%d 1 died\n", const_info->t_die / MILLI);
 		return 0;
 	}
