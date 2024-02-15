@@ -15,10 +15,17 @@
 static t_info	*init_info(t_const *const_info)
 {
 	t_info	*info;
+	int		idx;
 
-	info = (t_info *)ft_calloc(1, sizeof(t_info));
-	info->const_info = const_info;
-	info->n_eat = const_info->n_eat;
+	idx = 0;
+	info = (t_info *)ft_calloc(const_info->p_cnt, sizeof(t_info));
+	while (idx < const_info->p_cnt)
+	{
+		info[idx].const_info = const_info;
+		info[idx].n_eat = const_info->n_eat;
+		
+		idx++;
+	}
 	return (info);
 }
 
@@ -28,14 +35,14 @@ void	make_philo_thread(t_const *const_info, pthread_t *philo_tid)
 	t_info	*info;
 	// t_info	*info_to_free;
 	idx = 0;
+	
+	info = init_info(const_info);
 	while (idx < const_info->p_cnt)
 	{
-		info = init_info(const_info);
-		// info_to_free = info;
-		info->p_num = idx;
-		if (pthread_create(&philo_tid[idx], NULL, do_philo, (void *)info) == -1)
-			print_error_n_exit(THREAD_CREATE_ERROR);
+		info[idx].p_num = idx;
+		if (pthread_create(&philo_tid[idx], NULL, do_philo, (void *)&info[idx]) == -1)
+			print_error(THREAD_CREATE_ERROR);
 		idx++;
-		// free(info);
 	}
+	free(info);
 }

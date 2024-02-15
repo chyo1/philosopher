@@ -38,41 +38,16 @@ void	*do_philo(void *cont)
 	{
 		// even num philo eat first
 		if (check_died_while_waiting(info, info->const_info->t_eat))
-			{
-				free(info);
 				return (NULL);
-				}
 	}
 	while (1)
 	{
 		if (do_eating(info))
-		{
-			// printf("philo eat\n");
-			{
-				free(info);
 				return (NULL);
-				}
-		}
 		if (do_sleeping(info))
-		{
-			// printf("philo sleep\n");
-			{
-				free(info);
 				return (NULL);
-				}
-		}
 		if (do_thinking(info))
-		{
-			// printf("philo think\n");
-			{
-				free(info);
 				return (NULL);
-				}
-		}
 	}
-	// free(info);
-	{
-		free(info);
 		return (NULL);
-		}
 }

@@ -25,10 +25,13 @@ typedef struct s_const
 	int				t_die; // time to die
 	int				t_eat; // time to eat
 	int				t_sleep; // time to sleep
-	int				*fork; // all forks
-	pthread_mutex_t	*m_fork; // fork mutex
-	int				n_eat; // cnt of eating
 	long long		start_time;
+	
+	// fork
+	pthread_mutex_t	*m_fork;
+	int				*fork; // all forks
+	int				n_eat; // cnt of eating
+	
 	// make all thread start at once
 	pthread_mutex_t	*ready;
 	pthread_mutex_t	*check_dead_thread;
@@ -45,7 +48,6 @@ typedef struct s_info
 	long long		t_last_eat;
 	int				n_eat; // 
 	t_const			*const_info;
-	// pthread_mutex_t	wait;
 }	t_info;
 
 # define TRUE 1
@@ -102,8 +104,13 @@ int 	check_died_while_waiting(t_info *info, long long total_sleep_time);
 // get_time.c
 long long	get_now_time(void);
 
+// handle_error_n_fin_program.c
+int	check_digit_n_exit(const char *str);
+int		print_error(int which);
+int	wait_threads(pthread_t *philo_tid, int p_cnt);
+int free_resources(t_const *const_info, pthread_t *philo_tid);
+
 // printf_error_n_exit.c
-int		print_error_n_exit(int which);
 void	print_doing(t_info *info, int which, long long start_time, int p_num);
 
 #endif

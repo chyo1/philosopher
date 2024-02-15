@@ -1,13 +1,6 @@
 
 #include "philosopher.h"
 
-static int	is_space(char c)
-{
-	if ((9 <= c && c <= 13) || c == 32)
-		return (1);
-	return (0);
-}
-
 void	*ft_calloc(size_t count, size_t size)
 {
 	char	*c;
@@ -15,44 +8,16 @@ void	*ft_calloc(size_t count, size_t size)
 
 	i = 0;
 	if (size && count > (size_t)(-1) / size)
-		print_error_n_exit(MALLOC_ERROR);
+		print_error(MALLOC_ERROR);
 	c = (char *)malloc(count * size);
 	if (c == NULL)
-		print_error_n_exit(MALLOC_ERROR);
+		print_error(MALLOC_ERROR);
 	while (i < count * size)
 	{
 		c[i] = 0;
 		i++;
 	}
 	return ((void *)c);
-}
-
-static int	check_digit_n_exit(const char *str)
-{
-	long long	num;
-
-	num = 0;
-	while (*str != '\0' && is_space(*str))
-		str++;
-	if (*str == '-' || *str == '+')
-	{
-		if (*str == '-')
-			print_error_n_exit(INVALID_DIGIT);
-		str++;
-	}
-	while (*str)
-	{
-		if ('0' <= *str && *str <= '9')
-			num = num * 10 + (*str - '0');
-		else
-			break ;
-		str++;
-	}
-	while (*str != '\0' && is_space(*str))
-		str++;
-	if (*str != '\0' || num == 0)
-		print_error_n_exit(INVALID_DIGIT);
-	return (num);
 }
 
 void	init_const_info_mutexs(t_const *const_info)
@@ -76,7 +41,7 @@ t_const	*init_const_info(int argc, char **argv)
 
 	// check invalid argument count
 	if (!(5 <= argc && argc <= 6))
-		print_error_n_exit (INVALID_ARG_NUM);
+		print_error (INVALID_ARG_NUM);
 	
 	const_info = (t_const *)ft_calloc(1, sizeof(t_const));
 	const_info->p_cnt = check_digit_n_exit(argv[1]);
