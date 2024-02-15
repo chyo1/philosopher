@@ -6,7 +6,7 @@
 /*   By: hyowchoi <hyowchoi@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 19:39:37 by hyowchoi          #+#    #+#             */
-/*   Updated: 2024/02/15 17:25:42 by hyowchoi         ###   ########.fr       */
+/*   Updated: 2024/02/15 17:36:43 by hyowchoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,13 @@ void	print_error_n_exit(int which)
 
 void	print_doing(t_info *info, int which, long long start_time, int p_num)
 {
+	pthread_mutex_lock(info->const_info->printable);
 	if (which != DEAD)
 	{
 		check_died(info);
 		if (check_someone_died(info))
 			return ;
 	}
-	pthread_mutex_lock(info->const_info->printable);
 	if (which == TAKE_FORK)
 		printf("%lld %d has taken a fork\n", (get_now_time() - start_time) / MILLI, p_num + 1);
 	else if (which == EATING)
