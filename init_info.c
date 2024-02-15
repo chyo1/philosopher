@@ -45,12 +45,12 @@ static int	check_digit_n_exit(const char *str)
 		if ('0' <= *str && *str <= '9')
 			num = num * 10 + (*str - '0');
 		else
-			return (num);
+			break ;
 		str++;
 	}
 	while (*str != '\0' && is_space(*str))
 		str++;
-	if (*str)
+	if (*str != '\0' || num == 0)
 		print_error_n_exit(INVALID_DIGIT);
 	return (num);
 }

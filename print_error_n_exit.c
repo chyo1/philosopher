@@ -6,19 +6,22 @@
 /*   By: hyowchoi <hyowchoi@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 19:39:37 by hyowchoi          #+#    #+#             */
-/*   Updated: 2024/02/15 17:36:43 by hyowchoi         ###   ########.fr       */
+/*   Updated: 2024/02/15 19:24:24 by hyowchoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosopher.h"
 
-void	print_error_n_exit(int which)
+int	print_error_n_exit(int which)
 {
 	if (which == INVALID_ARG_NUM)
 		printf("Invalid argc num\n");
+	if (which == INVALID_DIGIT)
+		printf("Invalid argument\n");
 	if (which == THREAD_CREATE_ERROR)
 		printf("pthread create error\n");
 	exit (1);
+	return (TRUE);
 }
 
 void	print_doing(t_info *info, int which, long long start_time, int p_num)

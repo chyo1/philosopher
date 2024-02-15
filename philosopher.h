@@ -6,7 +6,7 @@
 /*   By: hyowchoi <hyowchoi@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 18:41:17 by hyowchoi          #+#    #+#             */
-/*   Updated: 2024/02/15 15:23:27 by hyowchoi         ###   ########.fr       */
+/*   Updated: 2024/02/15 19:41:16 by hyowchoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ int 	check_died_while_waiting(t_info *info, long long total_sleep_time);
 long long	get_now_time(void);
 
 // printf_error_n_exit.c
-void	print_error_n_exit(int which);
+int		print_error_n_exit(int which);
 void	print_doing(t_info *info, int which, long long start_time, int p_num);
 
 #endif
