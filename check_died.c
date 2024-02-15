@@ -6,7 +6,7 @@
 /*   By: hyowchoi <hyowchoi@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 16:00:53 by hyowchoi          #+#    #+#             */
-/*   Updated: 2024/02/15 15:12:53 by hyowchoi         ###   ########.fr       */
+/*   Updated: 2024/02/15 17:12:20 by hyowchoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int check_died_while_waiting(t_info *info, long long total_sleep_time)
 	if (total_sleep_time * 0.8 + get_now_time() - info->t_last_eat < dead_time)
 		usleep(total_sleep_time * 0.8);
 
-	while (end_time <= get_now_time())
+	while (get_now_time() <= end_time)
 	{
 		// Is this thread dead?
 		check_died(info);
