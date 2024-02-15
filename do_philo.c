@@ -6,7 +6,7 @@
 /*   By: hyowchoi <hyowchoi@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 15:27:15 by hyowchoi          #+#    #+#             */
-/*   Updated: 2024/02/15 17:07:25 by hyowchoi         ###   ########.fr       */
+/*   Updated: 2024/02/15 20:19:34 by hyowchoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,20 @@ void	*do_philo(void *cont)
 	while (1)
 	{
 		if (do_eating(info))
+		{
+			// printf("philo eat\n");
 			return (NULL);
+		}
 		if (do_sleeping(info))
+		{
+			// printf("philo sleep\n");
 			return (NULL);
+		}
 		if (do_thinking(info))
+		{
+			// printf("philo think\n");
 			return (NULL);
+		}
 	}
 	return (NULL);
 }

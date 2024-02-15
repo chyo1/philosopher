@@ -104,5 +104,6 @@ pthread_t	*init_tid(int philo_num)
 	pthread_t	*philo_tid;
 
 	philo_tid = (pthread_t *)ft_calloc(philo_num, sizeof(pthread_t));
+	printf("philo_tid : %p\n", philo_tid);
 	return (philo_tid);
 }

@@ -6,7 +6,7 @@
 /*   By: hyowchoi <hyowchoi@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 18:38:31 by hyowchoi          #+#    #+#             */
-/*   Updated: 2024/02/15 19:27:33 by hyowchoi         ###   ########.fr       */
+/*   Updated: 2024/02/15 20:40:58 by hyowchoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,16 @@
 
 int	wait_threads(pthread_t *philo_tid, int p_cnt)
 {
-	int	status;
 	int	idx;
 
 	idx = 0;
 	while (idx < p_cnt)
 	{
-		pthread_join(philo_tid[idx], (void *)&status);
+		pthread_join(philo_tid[idx], NULL);
 		idx++;
+		
 	}
-	return (status);
+	return (0);
 }
 
 /* 	number_of_philosophers, 
