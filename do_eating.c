@@ -6,7 +6,7 @@
 /*   By: hyowchoi <hyowchoi@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 12:50:35 by hyowchoi          #+#    #+#             */
-/*   Updated: 2024/02/15 14:50:13 by hyowchoi         ###   ########.fr       */
+/*   Updated: 2024/02/15 19:09:00 by hyowchoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,8 @@ static void	free_forks(t_info *info)
 
 int	do_eating(t_info *info)
 {
+	if (info->n_eat == 0)
+		return (TRUE);
 	// eating
 	if (check_forks(info))
 		return (TRUE);
@@ -75,11 +77,6 @@ int	do_eating(t_info *info)
 			return (TRUE);
 	if (info->n_eat > 0)
 		info->n_eat--;
-	if (info->n_eat == 0)
-	{
-		free_forks(info);
-		return (0);
-	}
 	free_forks(info);
 	return (FALSE);
 }
