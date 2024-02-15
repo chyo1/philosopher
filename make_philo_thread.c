@@ -19,30 +19,36 @@ static t_info	*init_info(t_const *const_info)
 
 	idx = 0;
 	info = (t_info *)ft_calloc(const_info->p_cnt, sizeof(t_info));
+	if (!info)
+		return (0);
 	while (idx < const_info->p_cnt)
 	{
 		info[idx].const_info = const_info;
 		info[idx].n_eat = const_info->n_eat;
-		
 		idx++;
 	}
 	return (info);
 }
 
-void	make_philo_thread(t_const *const_info, pthread_t *philo_tid)
+int	make_philo_thread(t_const *const_info, pthread_t *philo_tid)
 {
 	int		idx;
 	t_info	*info;
-	// t_info	*info_to_free;
-	idx = 0;
-	
+
+	idx = 0;	
 	info = init_info(const_info);
+	if (!info)
+		return (1);
 	while (idx < const_info->p_cnt)
 	{
 		info[idx].p_num = idx;
-		if (pthread_create(&philo_tid[idx], NULL, do_philo, (void *)&info[idx]) == -1)
+		if (pthread_create(&philo_tid[idx], NULL, do_philo, (void *)&info[idx]) != 0)
+		{
 			print_error(THREAD_CREATE_ERROR);
+			return (1);
+		}
 		idx++;
 	}
 	free(info);
+	return (0);
 }

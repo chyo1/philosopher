@@ -16,6 +16,7 @@ long long	get_now_time(void)
 {
 	struct timeval	time;
 
-	gettimeofday(&time, NULL);
+	if (gettimeofday(&time, NULL))
+		return (-1);
 	return (time.tv_sec * MICRO + time.tv_usec);
 }

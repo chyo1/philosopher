@@ -82,7 +82,7 @@ t_const		*init_const_info(int argc, char **argv);
 pthread_t	*init_tid(int philo_num);
 
 // make_philo_thread.c
-void		make_philo_thread(t_const *const_info, pthread_t *philo_tid);
+int		make_philo_thread(t_const *const_info, pthread_t *philo_tid);
 
 // do_philo.c
 void		*do_philo(void *cont);

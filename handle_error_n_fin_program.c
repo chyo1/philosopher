@@ -54,7 +54,8 @@ int	wait_threads(pthread_t *philo_tid, int p_cnt)
 	idx = 0;
 	while (idx < p_cnt)
 	{
-		pthread_join(philo_tid[idx], NULL);
+		if (pthread_join(philo_tid[idx], NULL))
+			return (1);
 		idx++;
 	}
 	return (0);
@@ -71,5 +72,5 @@ int free_resources(t_const *const_info, pthread_t *philo_tid)
 	free(const_info->printable);
 	free(const_info);
 	free(philo_tid);
-	return (0);
+	return (1);
 }
