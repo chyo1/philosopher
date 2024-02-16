@@ -80,6 +80,6 @@ pthread_t	*init_tid(int philo_num)
 	philo_tid = (pthread_t *)ft_calloc(philo_num, sizeof(pthread_t));
 	if (!philo_tid)
 		return (0);
-	printf("philo_tid : %p\n", philo_tid);
+	// printf("philo_tid : %p\n", philo_tid);
 	return (philo_tid);
 }

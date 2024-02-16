@@ -6,7 +6,7 @@
 /*   By: hyowchoi <hyowchoi@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 12:50:35 by hyowchoi          #+#    #+#             */
-/*   Updated: 2024/02/15 20:09:49 by hyowchoi         ###   ########.fr       */
+/*   Updated: 2024/02/16 16:53:36 by hyowchoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ static int	check_forks(t_info *info)
 
 static void	free_forks(t_info *info)
 {
-
 	// free right fork
 	pthread_mutex_lock(info->chk_forks[1]);
 	*info->my_forks[1] = EMPTY;

@@ -27,7 +27,7 @@ LAST_BONUS : $(SRCS_BONUS)
 	touch LAST_BONUS
 
 debug : $(SRCS_MAN)
-		cc $(CFLAGS) -g -fsanitize=address -o debug $(SRCS_MAN)
+		cc $(CFLAGS) -g -fsanitize=thread -o debug $(SRCS_MAN)
 
 clean :
 	rm LAST_ALL

@@ -6,7 +6,7 @@
 /*   By: hyowchoi <hyowchoi@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 18:38:31 by hyowchoi          #+#    #+#             */
-/*   Updated: 2024/02/16 16:30:16 by hyowchoi         ###   ########.fr       */
+/*   Updated: 2024/02/16 19:37:29 by hyowchoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,13 @@ int	main(int argc, char **argv)
 		return (1);
 
 	// If there's only one philosopher, kill at t_die
-	if (const_info->p_cnt == 1)
-	{
-		usleep(const_info->t_die);
-		printf("%d 1 died\n", const_info->t_die / MILLI);
-		free_resources(const_info, NULL, NULL);
-		return (1);
-	}
+	// if (const_info->p_cnt == 1)
+	// {
+	// 	usleep(const_info->t_die);
+	// 	printf("%d 1 died\n", const_info->t_die / MILLI);
+	// 	free_resources(const_info, NULL, NULL);
+	// 	return (1);
+	// }
 
 	philo_tid = init_tid(const_info->p_cnt);
 	if (!philo_tid)
@@ -43,11 +43,10 @@ int	main(int argc, char **argv)
 	// to make all thread start at once
 	pthread_mutex_lock(const_info->ready);
 
-	const_info->start_time = get_now_time();
 	info = make_philo_thread(const_info, philo_tid);
 	if (!info)	
 		return (free_resources(const_info, philo_tid, info));
-
+	const_info->start_time = get_now_time();
 	pthread_mutex_unlock(const_info->ready);
 
 	// wait for all threads to finish
