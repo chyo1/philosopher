@@ -6,7 +6,7 @@
 /*   By: hyowchoi <hyowchoi@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 18:41:17 by hyowchoi          #+#    #+#             */
-/*   Updated: 2024/02/16 16:14:33 by hyowchoi         ###   ########.fr       */
+/*   Updated: 2024/02/16 16:29:28 by hyowchoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ int    do_sleeping(t_info *info);
 int    do_thinking (t_info *info);
 
 // check_died.c
-int	check_died(t_info *info);
+void	check_died(t_info *info);
 int	check_someone_died(t_info *info);
 int 	check_died_while_waiting(t_info *info, long long total_sleep_time);
 

@@ -14,23 +14,25 @@
 
 void	print_doing(t_info *info, int which, long long start_time, int p_num)
 {
-	// if (which == DEAD)
-	// {
-	// 	pthread_mutex_lock(info->const_info->printable);
-	// 	printf("%lld %d died\n", (get_now_time() - start_time) / MILLI, p_num + 1);
-	// 	pthread_mutex_unlock(info->const_info->printable);
-	// 	return ;
-	// }
-
-	pthread_mutex_lock(info->const_info->printable);
-	if (which != DEAD)
+	while (1)
 	{
-		if (check_died(info))
-			printf("%lld %d died\n", (get_now_time() - start_time) / MILLI, p_num + 1);
-		if (check_someone_died(info))
+		pthread_mutex_lock(info->const_info->printable);
+		if (*info->const_info->is_printable == TRUE)
 		{
+			*info->const_info->is_printable = FALSE;
 			pthread_mutex_unlock(info->const_info->printable);
-			return ;
+			break ;
+		}
+		pthread_mutex_unlock(info->const_info->printable);
+		if (which != DEAD)
+		{
+			check_died(info);
+			if (check_someone_died(info))
+			{
+				*info->const_info->is_printable = FALSE;
+				pthread_mutex_unlock(info->const_info->printable);
+				return ;
+			}
 		}
 	}
 	if (which == TAKE_FORK)
@@ -46,5 +48,8 @@ void	print_doing(t_info *info, int which, long long start_time, int p_num)
 		printf("%lld %d is thinking\n", (get_now_time() - start_time) / MILLI, p_num + 1);
 	else if (which == DEAD)
 		printf("%lld %d died\n", (get_now_time() - start_time) / MILLI, p_num + 1);
+	pthread_mutex_lock(info->const_info->printable);
+	if (which != DEAD)
+		*info->const_info->is_printable = TRUE;
 	pthread_mutex_unlock(info->const_info->printable);
 }
