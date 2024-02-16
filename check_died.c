@@ -6,7 +6,7 @@
 /*   By: hyowchoi <hyowchoi@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 16:00:53 by hyowchoi          #+#    #+#             */
-/*   Updated: 2024/02/15 20:18:45 by hyowchoi         ###   ########.fr       */
+/*   Updated: 2024/02/16 16:10:19 by hyowchoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,23 +24,25 @@ int	check_someone_died(t_info *info)
 	return (FALSE);
 }
 
-void	check_died(t_info *info)
+int	check_died(t_info *info)
 {
 	long long	dead_time;
+	int			ret_val;
 
-	// if (check_someone_died(info))
-	// 	return (TRUE);
+	ret_val = 0;
 	dead_time = info->const_info->t_die;
 	if (get_now_time() - info->t_last_eat >= dead_time)
 	{
 		pthread_mutex_lock(info->const_info->check_dead_thread);
 		if (*info->const_info->is_thread_dead == FALSE)
-			printf("%lld %d died\n", (get_now_time() - info->const_info->start_time) / MILLI, info->p_num + 1);
-		*info->const_info->is_thread_dead = TRUE;
+		{
+			ret_val = 1;
+			*info->const_info->is_thread_dead = TRUE;
+			// print_doing(info, DEAD, info->const_info->start_time, info->p_num);
+		}
 		pthread_mutex_unlock(info->const_info->check_dead_thread);
-		// return (TRUE);
 	}
-	// return (FALSE);
+	return (ret_val);
 }
 
 int check_died_while_waiting(t_info *info, long long total_sleep_time)

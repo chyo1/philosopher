@@ -6,7 +6,7 @@
 /*   By: hyowchoi <hyowchoi@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 18:38:31 by hyowchoi          #+#    #+#             */
-/*   Updated: 2024/02/15 21:07:51 by hyowchoi         ###   ########.fr       */
+/*   Updated: 2024/02/16 16:19:11 by hyowchoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ int	main(int argc, char **argv)
 {
 	pthread_t 		*philo_tid;
 	t_const			*const_info;
+	t_info			*info;
 
 	const_info = init_const_info(argc, argv);
 	if (!const_info)
@@ -31,28 +32,29 @@ int	main(int argc, char **argv)
 	{
 		usleep(const_info->t_die);
 		printf("%d 1 died\n", const_info->t_die / MILLI);
-		free_resources(const_info, NULL);
+		free_resources(const_info, NULL, NULL);
 		return (1);
 	}
 
 	philo_tid = init_tid(const_info->p_cnt);
 	if (!philo_tid)
-		return (free_resources(const_info, philo_tid));
+		return (free_resources(const_info, philo_tid, NULL));
 
 	// to make all thread start at once
 	pthread_mutex_lock(const_info->ready);
 
 	const_info->start_time = get_now_time();
-	if (make_philo_thread(const_info, philo_tid))
-		return (free_resources(const_info, philo_tid));
+	info = make_philo_thread(const_info, philo_tid);
+	if (!info)	
+		return (free_resources(const_info, philo_tid, info));
 
 	pthread_mutex_unlock(const_info->ready);
 
 	// wait for all threads to finish
 	if (wait_threads(philo_tid, const_info->p_cnt))
-		return (free_resources(const_info, philo_tid));
+		return (free_resources(const_info, philo_tid, info));
 
 	// free all resources
-	free_resources(const_info, philo_tid);
+	free_resources(const_info, philo_tid, info);
 	return (0);
 }

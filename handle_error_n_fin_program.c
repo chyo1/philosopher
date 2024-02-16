@@ -61,7 +61,7 @@ int	wait_threads(pthread_t *philo_tid, int p_cnt)
 	return (0);
 }
 
-int free_resources(t_const *const_info, pthread_t *philo_tid)
+int free_resources(t_const *const_info, pthread_t *philo_tid, t_info *info)
 {
 	free(const_info->fork);
 	free(const_info->m_fork);
@@ -72,5 +72,6 @@ int free_resources(t_const *const_info, pthread_t *philo_tid)
 	free(const_info->printable);
 	free(const_info);
 	free(philo_tid);
+	free(info);
 	return (1);
 }

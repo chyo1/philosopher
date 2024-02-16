@@ -65,7 +65,7 @@ t_const	*init_const_info(int argc, char **argv)
 	if (!const_info->fork || !const_info->m_fork || !const_info->ready || !const_info->check_dead_thread
 	|| !const_info->is_thread_dead || !const_info->printable || !const_info->is_printable)
 	{
-		free_resources(const_info, NULL);
+		free_resources(const_info, NULL, NULL);
 		return (0);
 	}
 	*const_info->is_printable = TRUE;

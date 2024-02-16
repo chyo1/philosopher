@@ -6,7 +6,7 @@
 /*   By: hyowchoi <hyowchoi@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 18:41:17 by hyowchoi          #+#    #+#             */
-/*   Updated: 2024/02/15 19:41:16 by hyowchoi         ###   ########.fr       */
+/*   Updated: 2024/02/16 16:14:33 by hyowchoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ t_const		*init_const_info(int argc, char **argv);
 pthread_t	*init_tid(int philo_num);
 
 // make_philo_thread.c
-int		make_philo_thread(t_const *const_info, pthread_t *philo_tid);
+t_info	*make_philo_thread(t_const *const_info, pthread_t *philo_tid);
 
 // do_philo.c
 void		*do_philo(void *cont);
@@ -97,7 +97,7 @@ int    do_sleeping(t_info *info);
 int    do_thinking (t_info *info);
 
 // check_died.c
-void	check_died(t_info *info);
+int	check_died(t_info *info);
 int	check_someone_died(t_info *info);
 int 	check_died_while_waiting(t_info *info, long long total_sleep_time);
 
@@ -108,7 +108,7 @@ long long	get_now_time(void);
 int	check_digit_n_exit(const char *str);
 int		print_error(int which);
 int	wait_threads(pthread_t *philo_tid, int p_cnt);
-int free_resources(t_const *const_info, pthread_t *philo_tid);
+int free_resources(t_const *const_info, pthread_t *philo_tid, t_info *info);
 
 // printf_error_n_exit.c
 void	print_doing(t_info *info, int which, long long start_time, int p_num);
