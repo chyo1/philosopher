@@ -6,7 +6,7 @@
 /*   By: hyowchoi <hyowchoi@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 16:00:53 by hyowchoi          #+#    #+#             */
-/*   Updated: 2024/02/16 17:52:50 by hyowchoi         ###   ########.fr       */
+/*   Updated: 2024/02/16 21:25:29 by hyowchoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	check_someone_died(t_info *info)
 {
 	pthread_mutex_lock(info->const_info->check_dead_thread);
-	if (*info->const_info->is_thread_dead == TRUE)
+	if (info->const_info->is_thread_dead == TRUE)
 	{
 		pthread_mutex_unlock(info->const_info->check_dead_thread);
 		return (TRUE);
@@ -32,10 +32,10 @@ void	check_died(t_info *info)
 	if (get_now_time() - info->t_last_eat >= dead_time)
 	{
 		pthread_mutex_lock(info->const_info->check_dead_thread);
-		if (*info->const_info->is_thread_dead == FALSE)
+		if (info->const_info->is_thread_dead == FALSE)
 		{
 			print_doing(info, DEAD, info->const_info->start_time, info->p_num);
-			*info->const_info->is_thread_dead = TRUE;
+			info->const_info->is_thread_dead = TRUE;
 		}
 		pthread_mutex_unlock(info->const_info->check_dead_thread);
 	}

@@ -6,7 +6,7 @@
 /*   By: hyowchoi <hyowchoi@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 18:38:31 by hyowchoi          #+#    #+#             */
-/*   Updated: 2024/02/16 19:37:29 by hyowchoi         ###   ########.fr       */
+/*   Updated: 2024/02/16 21:26:23 by hyowchoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,5 +55,6 @@ int	main(int argc, char **argv)
 
 	// free all resources
 	free_resources(const_info, philo_tid, info);
+	while (1);
 	return (0);
 }

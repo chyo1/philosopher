@@ -59,11 +59,12 @@ t_const	*init_const_info(int argc, char **argv)
 	const_info->m_fork = (pthread_mutex_t *)ft_calloc(const_info->p_cnt, sizeof(pthread_mutex_t));
 	const_info->ready = (pthread_mutex_t *)ft_calloc(1, sizeof(pthread_mutex_t));
 	const_info->check_dead_thread = (pthread_mutex_t *)ft_calloc(1, sizeof(pthread_mutex_t));
-	const_info->is_thread_dead = (int *)ft_calloc(1, sizeof(int));
+	// const_info->is_thread_dead = (int *)ft_calloc(1, sizeof(int));
+	const_info->is_thread_dead = FALSE;
 	const_info->printable = (pthread_mutex_t *)ft_calloc(1, sizeof(pthread_mutex_t));
 	const_info->is_printable = (int *)ft_calloc(1, sizeof(int));
 	if (!const_info->fork || !const_info->m_fork || !const_info->ready || !const_info->check_dead_thread
-	|| !const_info->is_thread_dead || !const_info->printable || !const_info->is_printable)
+	|| !const_info->printable || !const_info->is_printable)
 	{
 		free_resources(const_info, NULL, NULL);
 		return (0);

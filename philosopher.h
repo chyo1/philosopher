@@ -6,7 +6,7 @@
 /*   By: hyowchoi <hyowchoi@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 18:41:17 by hyowchoi          #+#    #+#             */
-/*   Updated: 2024/02/16 16:29:28 by hyowchoi         ###   ########.fr       */
+/*   Updated: 2024/02/16 21:25:08 by hyowchoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ typedef struct s_const
 	// make all thread start at once
 	pthread_mutex_t	*ready;
 	pthread_mutex_t	*check_dead_thread;
-	int				*is_thread_dead;
+	int				is_thread_dead;
 	pthread_mutex_t	*printable;
 	int				*is_printable;
 }	t_const;
