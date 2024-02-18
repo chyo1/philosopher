@@ -21,19 +21,21 @@ void	*ft_calloc(size_t count, size_t size)
 	return ((void *)c);
 }
 
-void	init_const_info_mutexs(t_const *const_info)
+void	init_const_info_contents(t_const *const_info)
 {
 	int	idx;
 
 	idx = 0;
+	const_info->is_thread_dead = FALSE;
+	const_info->is_printable = TRUE;
 	while (idx < const_info->p_cnt)
 	{
 		pthread_mutex_init(&(const_info->m_fork[idx]), NULL); // check error
 		idx++;
 	}
-	pthread_mutex_init(const_info->ready, NULL);
-	pthread_mutex_init(const_info->check_dead_thread, NULL);
-	pthread_mutex_init(const_info->printable, NULL);
+	pthread_mutex_init(&const_info->ready, NULL);
+	pthread_mutex_init(&const_info->check_dead_thread, NULL);
+	pthread_mutex_init(&const_info->printable, NULL);
 }
 
 t_const	*init_const_info(int argc, char **argv)
@@ -57,20 +59,12 @@ t_const	*init_const_info(int argc, char **argv)
 		const_info->n_eat = -1;
 	const_info->fork = (int *)ft_calloc(const_info->p_cnt, sizeof(int));
 	const_info->m_fork = (pthread_mutex_t *)ft_calloc(const_info->p_cnt, sizeof(pthread_mutex_t));
-	const_info->ready = (pthread_mutex_t *)ft_calloc(1, sizeof(pthread_mutex_t));
-	const_info->check_dead_thread = (pthread_mutex_t *)ft_calloc(1, sizeof(pthread_mutex_t));
-	// const_info->is_thread_dead = (int *)ft_calloc(1, sizeof(int));
-	const_info->is_thread_dead = FALSE;
-	const_info->printable = (pthread_mutex_t *)ft_calloc(1, sizeof(pthread_mutex_t));
-	const_info->is_printable = (int *)ft_calloc(1, sizeof(int));
-	if (!const_info->fork || !const_info->m_fork || !const_info->ready || !const_info->check_dead_thread
-	|| !const_info->printable || !const_info->is_printable)
+	if (!const_info->fork || !const_info->m_fork)
 	{
 		free_resources(const_info, NULL, NULL);
 		return (0);
 	}
-	*const_info->is_printable = TRUE;
-	init_const_info_mutexs(const_info);
+	init_const_info_contents(const_info);
 	return (const_info);
 }
 

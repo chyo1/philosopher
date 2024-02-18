@@ -14,13 +14,13 @@
 
 int	check_someone_died(t_info *info)
 {
-	pthread_mutex_lock(info->const_info->check_dead_thread);
+	pthread_mutex_lock(&info->const_info->check_dead_thread);
 	if (info->const_info->is_thread_dead == TRUE)
 	{
-		pthread_mutex_unlock(info->const_info->check_dead_thread);
+		pthread_mutex_unlock(&info->const_info->check_dead_thread);
 		return (TRUE);
 	}
-	pthread_mutex_unlock(info->const_info->check_dead_thread);
+	pthread_mutex_unlock(&info->const_info->check_dead_thread);
 	return (FALSE);
 }
 
@@ -31,13 +31,13 @@ void	check_died(t_info *info)
 	dead_time = info->const_info->t_die;
 	if (get_now_time() - info->t_last_eat >= dead_time)
 	{
-		pthread_mutex_lock(info->const_info->check_dead_thread);
+		pthread_mutex_lock(&info->const_info->check_dead_thread);
 		if (info->const_info->is_thread_dead == FALSE)
 		{
 			print_doing(info, DEAD, info->const_info->start_time, info->p_num);
 			info->const_info->is_thread_dead = TRUE;
 		}
-		pthread_mutex_unlock(info->const_info->check_dead_thread);
+		pthread_mutex_unlock(&info->const_info->check_dead_thread);
 	}
 }
 

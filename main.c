@@ -27,27 +27,18 @@ int	main(int argc, char **argv)
 	if (!const_info)
 		return (1);
 
-	// If there's only one philosopher, kill at t_die
-	// if (const_info->p_cnt == 1)
-	// {
-	// 	usleep(const_info->t_die);
-	// 	printf("%d 1 died\n", const_info->t_die / MILLI);
-	// 	free_resources(const_info, NULL, NULL);
-	// 	return (1);
-	// }
-
 	philo_tid = init_tid(const_info->p_cnt);
 	if (!philo_tid)
 		return (free_resources(const_info, philo_tid, NULL));
 
 	// to make all thread start at once
-	pthread_mutex_lock(const_info->ready);
+	pthread_mutex_lock(&const_info->ready);
 
 	info = make_philo_thread(const_info, philo_tid);
 	if (!info)	
 		return (free_resources(const_info, philo_tid, info));
 	const_info->start_time = get_now_time();
-	pthread_mutex_unlock(const_info->ready);
+	pthread_mutex_unlock(&const_info->ready);
 
 	// wait for all threads to finish
 	if (wait_threads(philo_tid, const_info->p_cnt))
@@ -55,6 +46,5 @@ int	main(int argc, char **argv)
 
 	// free all resources
 	free_resources(const_info, philo_tid, info);
-	while (1);
 	return (0);
 }

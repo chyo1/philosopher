@@ -12,9 +12,8 @@
 
 #include "philosopher.h"
 
-static int	check_forks(t_info *info)
+static int	check_left_fork(t_info *info)
 {
-	// check left fork
 	while (1)
 	{
 		// Is this thread dead?
@@ -31,8 +30,11 @@ static int	check_forks(t_info *info)
 		}
 		pthread_mutex_unlock(info->chk_forks[0]); 
 	}
+	return (0);
+}
 
-	// check right fork
+static int	check_right_fork(t_info *info)
+{
 	while (1)
 	{
 		// Is this thread dead?
@@ -52,6 +54,13 @@ static int	check_forks(t_info *info)
 	return (TRUE);
 }
 
+static int	check_forks(t_info *info)
+{
+	if (check_left_fork(info) || check_right_fork(info))
+		return (1);
+	return (0);
+}
+
 static void	free_forks(t_info *info)
 {
 	// free right fork
@@ -69,6 +78,7 @@ int	do_eating(t_info *info)
 {
 	if (info->n_eat == 0)
 		return (TRUE);
+
 	// eating
 	if (check_forks(info))
 		return (TRUE);

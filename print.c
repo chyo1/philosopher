@@ -11,19 +11,18 @@
 /* ************************************************************************** */
 
 #include "philosopher.h"
-
-void	print_doing(t_info *info, int which, long long start_time, int p_num)
+static void	get_print_qualification(t_info *info, int which)
 {
 	while (1)
 	{
-		pthread_mutex_lock(info->const_info->printable);
-		if (*info->const_info->is_printable == TRUE)
+		pthread_mutex_lock(&info->const_info->printable);
+		if (info->const_info->is_printable == TRUE)
 		{
-			*info->const_info->is_printable = FALSE;
-			pthread_mutex_unlock(info->const_info->printable);
+			info->const_info->is_printable = FALSE;
+			pthread_mutex_unlock(&info->const_info->printable);
 			break ;
 		}
-		pthread_mutex_unlock(info->const_info->printable);
+		pthread_mutex_unlock(&info->const_info->printable);
 		if (which != DEAD)
 		{
 			check_died(info);
@@ -31,6 +30,11 @@ void	print_doing(t_info *info, int which, long long start_time, int p_num)
 				return ;
 		}
 	}
+}
+
+void	print_doing(t_info *info, int which, long long start_time, int p_num)
+{
+	get_print_qualification(info, which);
 	if (which == TAKE_FORK)
 		printf("%lld %d has taken a fork\n", (get_now_time() - start_time) / MILLI, p_num + 1);
 	else if (which == EATING)
@@ -46,8 +50,8 @@ void	print_doing(t_info *info, int which, long long start_time, int p_num)
 		printf("%lld %d died\n", (get_now_time() - start_time) / MILLI, p_num + 1);
 	if (which != DEAD)
 	{
-		pthread_mutex_lock(info->const_info->printable);
-		*info->const_info->is_printable = TRUE;
-		pthread_mutex_unlock(info->const_info->printable);
+		pthread_mutex_lock(&info->const_info->printable);
+		info->const_info->is_printable = TRUE;
+		pthread_mutex_unlock(&info->const_info->printable);
 	}
 }

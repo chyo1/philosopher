@@ -21,8 +21,8 @@ static void	init_philo_info(t_info *info)
 	info->chk_forks[1] = &(info->const_info->m_fork[(info->p_num + 1) % p_cnt]);
 	info->my_forks[0] = &(info->const_info->fork[info->p_num]);
 	info->my_forks[1] = &(info->const_info->fork[(info->p_num + 1) % p_cnt]);
-	pthread_mutex_lock(info->const_info->ready);
-	pthread_mutex_unlock(info->const_info->ready);
+	pthread_mutex_lock(&info->const_info->ready);
+	pthread_mutex_unlock(&info->const_info->ready);
 
 	// to check_dead_time first_eat_time = start_time
 	info->t_last_eat = get_now_time();
