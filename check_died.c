@@ -6,7 +6,7 @@
 /*   By: hyowchoi <hyowchoi@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 16:00:53 by hyowchoi          #+#    #+#             */
-/*   Updated: 2024/02/16 21:25:29 by hyowchoi         ###   ########.fr       */
+/*   Updated: 2024/02/19 12:26:21 by hyowchoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,12 @@ void	check_died(t_info *info)
 		pthread_mutex_lock(&info->const_info->check_dead_thread);
 		if (info->const_info->is_thread_dead == FALSE)
 		{
-			print_doing(info, DEAD, info->const_info->start_time, info->p_num);
 			info->const_info->is_thread_dead = TRUE;
+			pthread_mutex_unlock(&info->const_info->check_dead_thread);
+			print_doing(info, DEAD, info->const_info->start_time, info->p_num);
 		}
 		pthread_mutex_unlock(&info->const_info->check_dead_thread);
+
 	}
 }
 

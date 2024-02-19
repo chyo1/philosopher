@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "philosopher.h"
-static void	get_print_qualification(t_info *info, int which)
+static int	get_print_qualification(t_info *info, int which)
 {
 	while (1)
 	{
@@ -27,14 +27,16 @@ static void	get_print_qualification(t_info *info, int which)
 		{
 			check_died(info);
 			if (check_someone_died(info))
-				return ;
+				return (1);
 		}
 	}
+	return (0);
 }
 
 void	print_doing(t_info *info, int which, long long start_time, int p_num)
 {
-	get_print_qualification(info, which);
+	if (get_print_qualification(info, which))
+		return ;
 	if (which == TAKE_FORK)
 		printf("%lld %d has taken a fork\n", (get_now_time() - start_time) / MILLI, p_num + 1);
 	else if (which == EATING)
