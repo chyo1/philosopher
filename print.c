@@ -23,6 +23,8 @@ static int	get_print_qualification(t_info *info, int which)
 			break ;
 		}
 		pthread_mutex_unlock(&info->const_info->printable);
+
+		// check if someone died
 		if (which != DEAD)
 		{
 			check_died(info);
@@ -50,6 +52,8 @@ void	print_doing(t_info *info, int which, long long start_time, int p_num)
 		printf("%lld %d is thinking\n", (get_now_time() - start_time) / MILLI, p_num + 1);
 	else if (which == DEAD)
 		printf("%lld %d died\n", (get_now_time() - start_time) / MILLI, p_num + 1);
+
+	// make other thread can print
 	if (which != DEAD)
 	{
 		pthread_mutex_lock(&info->const_info->printable);

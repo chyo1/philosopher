@@ -6,13 +6,13 @@
 /*   By: hyowchoi <hyowchoi@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 18:52:37 by hyowchoi          #+#    #+#             */
-/*   Updated: 2024/02/16 21:38:08 by hyowchoi         ###   ########.fr       */
+/*   Updated: 2024/02/19 13:39:47 by hyowchoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosopher.h"
 
-static t_info	*init_info(t_const *const_info)
+static t_info	*init_thread_info(t_const *const_info)
 {
 	t_info	*info;
 	int		idx;
@@ -36,12 +36,14 @@ t_info	*make_philo_thread(t_const *const_info, pthread_t *philo_tid)
 	t_info	*info;
 
 	idx = 0;	
-	info = init_info(const_info);
+	info = init_thread_info(const_info);
 	if (!info)
 		return (0);
 	while (idx < const_info->p_cnt)
 	{
 		info[idx].p_num = idx;
+
+		// create thread and execute
 		if (pthread_create(&philo_tid[idx], NULL, do_philo, (void *)&info[idx]) != 0)
 		{
 			print_error(THREAD_CREATE_ERROR);

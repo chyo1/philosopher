@@ -6,16 +6,14 @@
 /*   By: hyowchoi <hyowchoi@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 18:38:31 by hyowchoi          #+#    #+#             */
-/*   Updated: 2024/02/16 21:26:23 by hyowchoi         ###   ########.fr       */
+/*   Updated: 2024/02/19 13:36:55 by hyowchoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosopher.h"
 
-/* 	number_of_philosophers, 
-	time_to_die, 
-	time_to_eat, 
-	time_to_sleep, 
+/* 	number_of_philosophers,
+	time_to_die, time_to_eat, time_to_sleep, 
 	[number_of_times_each_philosopher_must_eat] */
 int	main(int argc, char **argv)
 {

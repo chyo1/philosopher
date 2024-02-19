@@ -6,7 +6,7 @@
 /*   By: hyowchoi <hyowchoi@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 18:41:17 by hyowchoi          #+#    #+#             */
-/*   Updated: 2024/02/16 21:25:08 by hyowchoi         ###   ########.fr       */
+/*   Updated: 2024/02/19 13:23:40 by hyowchoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ typedef struct s_info
 	int				*my_forks[2];
 	pthread_mutex_t	*chk_forks[2];
 	long long		t_last_eat;
-	int				n_eat; // 
+	int				n_eat;
 	t_const			*const_info;
 }	t_info;
 
@@ -105,7 +105,7 @@ int 		check_died_while_waiting(t_info *info, long long total_sleep_time);
 long long	get_now_time(void);
 
 // handle_error_n_fin_program.c
-int			check_digit_n_exit(const char *str);
+int			check_digit(const char *str);
 int			print_error(int which);
 int			wait_threads(pthread_t *philo_tid, int p_cnt);
 int 		free_resources(t_const *const_info, pthread_t *philo_tid, t_info *info);

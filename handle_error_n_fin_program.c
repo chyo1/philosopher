@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   handle_error_n_fin_program.c                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hyowchoi <hyowchoi@student.42seoul.kr>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/02/19 13:01:38 by hyowchoi          #+#    #+#             */
+/*   Updated: 2024/02/19 13:24:17 by hyowchoi         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philosopher.h"
 
 static int	is_space(char c)
@@ -7,7 +19,7 @@ static int	is_space(char c)
 	return (0);
 }
 
-int	check_digit_n_exit(const char *str)
+int	check_digit(const char *str)
 {
 	long long	num;
 
@@ -17,7 +29,7 @@ int	check_digit_n_exit(const char *str)
 	if (*str == '-' || *str == '+')
 	{
 		if (*str == '-')
-			print_error(INVALID_DIGIT);
+			return (print_error(INVALID_DIGIT));
 		str++;
 	}
 	while (*str)
@@ -31,7 +43,7 @@ int	check_digit_n_exit(const char *str)
 	while (*str != '\0' && is_space(*str))
 		str++;
 	if (*str != '\0' || num == 0)
-		print_error(INVALID_DIGIT);
+		return (print_error(INVALID_DIGIT));
 	return (num);
 }
 
@@ -43,7 +55,7 @@ int	print_error(int which)
 		printf("Invalid argument\n");
 	if (which == THREAD_CREATE_ERROR)
 		printf("pthread create error\n");
-	return (TRUE);
+	return (0);
 }
 
 int	wait_threads(pthread_t *philo_tid, int p_cnt)
